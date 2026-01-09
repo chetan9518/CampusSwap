@@ -1,7 +1,7 @@
 import express, { Response } from 'express';
 import { AuthRequest, auth } from '../middleware/auth';
 import prisma from '../lib/prisma';
-import { firebaseadmin } from '../config/firsbaseadmin';
+import firebaseadmin from '../config/firsbaseadmin';
 import { generateToken, verifyToken } from '../utils/jwt';
 import bcrypt from 'bcrypt';
 import { Prisma } from '@prisma/client';
