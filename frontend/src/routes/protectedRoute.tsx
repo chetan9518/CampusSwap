@@ -1,9 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/authContext";
+import { useJWTAuth } from "../context/jwtAuthContext";
 
-export default function ProtectedRoute ({children}:{children:React.ReactElement}){
-    const { user, loading } = useAuth();
-   if (loading) return <div>Loading...</div>;
-   return user?children:children
+export default function ProtectedRouteNew({ children }: { children: React.ReactElement }) {
+    const { user, loading } = useJWTAuth();
+    
+    if (loading) return <div>Loading...</div>;
+    
+    if (!user) return <Navigate to="/" replace />;
+    
+    return children;
 }
-//<Navigate to={"/"}/>

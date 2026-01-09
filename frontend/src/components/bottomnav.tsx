@@ -8,8 +8,8 @@ function BottomBar() {
     const isActive = (path: string) => location.pathname === path;
 
     const navItems = [
-        { path: "/", icon: Home, label: "Home" },
-        { path: "/listing", icon: Plus, label: "Sell" },
+        { path: "/home", icon: Home, label: "Home" },
+        { path: "/sell", icon: Plus, label: "Sell" },
         { path: "/listing", icon: List, label: "My Listings" },
         { path: "/profile", icon: User, label: "Profile" },
     ];
@@ -31,7 +31,13 @@ function BottomBar() {
                                     : "text-gray-500 active:text-gray-700"
                             }`}
                         >
-                            <Icon className="w-5 h-5" />
+                            <div className={`p-1 rounded-lg transition-colors ${
+                                active 
+                                    ? "bg-blue-50" 
+                                    : ""
+                            }`}>
+                                <Icon className="w-5 h-5" />
+                            </div>
                             <span className="text-[10px] font-medium">{item.label}</span>
                         </button>
                     );

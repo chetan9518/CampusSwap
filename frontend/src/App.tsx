@@ -4,18 +4,15 @@ import DesktopRoute from './routes/desktoproutes'
 import MobileRoutes from './routes/mobileroutes'
 
 function App() {
-  const [isMobile, setisMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-   
     const checkMobile = () => {
-      setisMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 768);
     }
     
- 
     checkMobile();
     
-   
     window.addEventListener("resize", checkMobile);
     
     return () => {

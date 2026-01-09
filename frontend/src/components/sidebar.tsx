@@ -1,9 +1,11 @@
-import { useState } from "react";
 import { BookOpen, Laptop, ShoppingBag, Sofa, Grid3x3 } from "lucide-react";
 
-function SideBar(){
-    const [activeCategory, setCategory] = useState("All");
-    
+interface SideBarProps {
+    activeCategory: string;
+    onCategoryChange: (category: string) => void;
+}
+
+function SideBar({ activeCategory, onCategoryChange }: SideBarProps){
     const categories = [
         { id: "All", name: "All Categories", icon: Grid3x3 },
         { id: "TextBooks", name: "Textbooks", icon: BookOpen },
@@ -27,7 +29,7 @@ function SideBar(){
                         return (
                             <button 
                                 key={category.id}
-                                onClick={() => setCategory(category.id)}
+                                onClick={() => onCategoryChange(category.id)}
                                 className={`relative flex items-center gap-3 px-4 py-2.5 rounded-lg w-full text-left text-sm transition-all duration-200 ${
                                     isActive
                                         ? "text-blue-700 bg-blue-50 font-semibold shadow-sm"

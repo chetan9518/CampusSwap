@@ -12,19 +12,18 @@ model User {
   uid       String   @unique
   email     String   @unique
   fullName  String
+  phone     String?
   hostel    String?
   year      String?
   avatar    String?
+  password  String?  
   createdAt DateTime @default(now())
 
   items Item[]
-}
-
-model Category {
-  id   String @id @default(cuid())
-  name String @unique
-
-  items Item[]
+  sentMessages Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+  buyerConversations Conversation[] @relation("BuyerConversations")
+  sellerConversations Conversation[] @relation("SellerConversations")
 }
 
 model Item {
@@ -35,12 +34,42 @@ model Item {
   condition   String
   images      String[]
   tags        String[]
+  category    String
   isAvailable Boolean @default(true)
   createdAt   DateTime @default(now())
 
   sellerId   String
-  categoryId String
 
   seller   User     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
-  category Category @relation(fields: [categoryId], references: [id])
+  conversations Conversation[]
+}
+
+model Conversation {
+  id          String   @id @default(cuid())
+  itemId      String
+  buyerId     String
+  sellerId    String
+  lastMessage String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  buyer  User   @relation("BuyerConversations", fields: [buyerId], references: [id], onDelete: Cascade)
+  seller User   @relation("SellerConversations", fields: [sellerId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([itemId, buyerId, sellerId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  senderId       String
+  receiverId     String
+  text           String
+  createdAt      DateTime     @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver     User         @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
 }

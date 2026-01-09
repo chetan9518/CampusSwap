@@ -6,35 +6,35 @@ import Item from "../pages/item";
 import Profile from "../pages/profile";
 import Homepage from "../pages/home";
 import Inbox from "../pages/inbox";
-import Auth from "../pages/auth";
+import Chat from "../pages/chat";
 import Onboarding from "../pages/onboarding";
 import ProtectedRoute from "./protectedRoute";
+import Auths from "../pages/auth";
+import { JWTAuthContext } from "../context/jwtAuthContext";
+import SellPage from "../pages/sell";
 
-function MobileRoutes(){
-return (
- <Routes>
-     <Route path="/" element={<Auth/>} />
-     <Route path="onBoard" element={<Onboarding/>}/>
-      <Route element={<MobileAppLayout />}>
+function MobileRoutes() {
+  return (
+    <JWTAuthContext>
+      <Routes>
+        <Route path="/" element={<Auths/>} />
+        <Route path="/onBoarding" element={<Onboarding />} />
         
-        <Route path="/home" element={
-          <ProtectedRoute><Homepage />
-          </ProtectedRoute>} />
-        <Route path="/listing" element={
-          <ProtectedRoute><Listing />
-          </ProtectedRoute>} />
+        <Route element={<MobileAppLayout />}>
+          <Route path="/home" element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
+          <Route path="/listing" element={<ProtectedRoute><Listing /></ProtectedRoute>} />
+          <Route path="/sell" element={<ProtectedRoute><SellPage /></ProtectedRoute>} />
+        </Route>
 
-      </Route>
-
-      <Route element={<MobileFocusLayout />}>
-
-        <Route path="/inbox" element={<ProtectedRoute><Inbox /></ProtectedRoute>} />
-        <Route path="/items/:id" element={<ProtectedRoute><Item /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-
-      </Route>
-
-    </Routes>
-)
+        <Route element={<MobileFocusLayout />}>
+          <Route path="/inbox" element={<ProtectedRoute><Inbox /></ProtectedRoute>} />
+          <Route path="/chat/:conversationId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+          <Route path="/items/:id" element={<ProtectedRoute><Item /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+        </Route>
+      </Routes>
+    </JWTAuthContext>
+  )
 }
+
 export default MobileRoutes;
