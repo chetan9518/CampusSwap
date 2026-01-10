@@ -11,6 +11,14 @@ const router = express.Router();
 // POST /auth/google - Login with Google
 router.post('/google', async (req: express.Request, res: Response) => {
   try {
+    // Check if Firebase Admin is initialized
+    if (!firebaseadmin.apps.length) {
+      return res.status(503).json({ 
+        success: false, 
+        message: 'Firebase Admin not configured. Please add FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, and FIREBASE_PRIVATE_KEY to your .env file.' 
+      });
+    }
+
     const { firebaseToken } = req.body;
     
     if (!firebaseToken) {
