@@ -1,5 +1,5 @@
 import express, { Response } from 'express';
-import { AuthRequest, auth } from '../middleware/auth';
+import { AuthRequest, auth } from '../middleware/auth.js';
 import prisma from '../lib/prisma';
 import firebaseadmin from '../config/firsbaseadmin';
 import { generateToken, verifyToken } from '../utils/jwt';
